@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pdcwebsolutions.netlify.app/sitemap.xml
