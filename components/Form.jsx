@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Form = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
@@ -16,7 +17,7 @@ const Form = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/send-email", // Make sure the backend is running
+        `${API_URL}/send-email`, // Make sure the backend is running
         formData
       );
       alert(response.data.message);
