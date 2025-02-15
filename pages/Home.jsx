@@ -3,23 +3,35 @@ import { assets } from "../src/assets/assets";
 import { motion } from "framer-motion";
 import Form from "../components/Form";
 import ScrollToButton from "../components/ScrollToButton";
+
+import { useState, useEffect } from "react";
+
 export default function Home() {
+  const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+      const handleResize = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return isMobile;
+  };
+
+  const isMobile = useIsMobile();
+
   return (
-    <div className=" mt-12 lg:mt-25">
-      <div className="w-full h-70 lg:h-200 flex justify-center items-center">
+    <div className="mt-10">
+      {isMobile ? (
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="h-full"
+          className="w-[100%]"
         >
-          <div
-            className="w-full h-full bg-cover bg-center transform scale-100 border border-b shadow-[2px_10px_60px_#11266a]   "
-            style={{
-              backgroundImage: `url(${assets.HomeHero})`,
-            }}
-          >
-            <div className="  h-full text-amber-50 flex flex-col items-center justify-between text-center lg:w-[100%]">
+          <div className=" w-full flex flex-row justify-center items-center">
+            <div className="w-[80%]  h-full text-amber-50 flex flex-col items-center justify-between text-center">
               <p className="text-[10px] w-[80%] mt-15 lg:w-max lg:text-[30px] ">
                 Innovative IT solutions for businesses to thrive online.
               </p>
@@ -27,8 +39,7 @@ export default function Home() {
                 className="
           text-[2.2vh]
           w-[100%]
-           md:text-[3vh]
-          lg:text-[6vh]
+  
           font-bold
           drop-shadow-[2px_2px_2px_black]
           "
@@ -46,7 +57,49 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-      </div>
+      ) : (
+        <div className=" lg:w-full lg:h-200 flex justify-center items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="h-full"
+          >
+            <div
+              className="w-full h-full bg-cover bg-center transform scale-100 border border-b shadow-[2px_10px_60px_#11266a]   "
+              style={{
+                backgroundImage: `url(${assets.HomeHero})`,
+              }}
+            >
+              <div className="  h-full text-amber-50 flex flex-col items-center justify-between text-center lg:w-[100%]">
+                <p className="text-[10px] w-[80%] mt-15 lg:w-max lg:text-[30px] ">
+                  Innovative IT solutions for businesses to thrive online.
+                </p>
+                <p
+                  className="
+          text-[2.2vh]
+          w-[100%]
+           md:text-[3vh]
+          lg:text-[6vh]
+          font-bold
+          drop-shadow-[2px_2px_2px_black]
+          "
+                >
+                  YOUR VISION, OUR CODE – LET&apos;S BUILD SOMETHING AMAZING
+                </p>
+
+                <ScrollToButton
+                  className={
+                    " shadow-[inset_2px_2px_4px_1px_rgba(0,0,0,0.3)] w-[14vh]  mb-10 font-bold rounded text-[12px] items-center flex flex-row justify-center bg-white p-1 text-black lg:w-[20vh] lg:rounded-xl lg:font-semibold lg:h-[7vh] lg:text-[3vh]"
+                  }
+                  label={"Learn More"}
+                  targetId={"services"}
+                ></ScrollToButton>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       <div className="mt-10 mb-10">
         <div className=" w-full lg:h-200 lg:mt-30 mt-10">
